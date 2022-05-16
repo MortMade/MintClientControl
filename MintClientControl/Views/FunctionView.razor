@@ -1,0 +1,32 @@
+﻿@page "/FunctionPage"
+@using  MintClientControl.ViewModels
+@inherits FetchDataBase
+
+<h3>FunctionView</h3>
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (ViewModel.Functions == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>FuncId</th>
+                <th>UserId</th>
+                <th>FuncRights</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var function in ViewModel.Functions)
+            {
+                <tr>
+                    <td><button @onclick="@(e => ViewModel.SendCommand(function.Command))">@function.Title</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+}

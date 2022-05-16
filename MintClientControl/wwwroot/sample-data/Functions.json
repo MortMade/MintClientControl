@@ -1,0 +1,16 @@
+[
+  {
+    "funcId": 1,
+    "Title" : "send Fireworks",
+    "Command" : "!Fireworks",
+    "userId": 1,
+    "funcRights": 0
+  },
+  {
+    "funcId": 2,
+    "Title": "Sig hej til Madeleine",
+    "Command": "Hej Madeleine",
+    "userId": 1,
+    "funcRights": 0
+  }
+]
