@@ -22,7 +22,7 @@ namespace MintClientControl.Models
     }
     public interface IFunctionDataModel
     {
-        Task<Functions[]> RetrieveFunctionsAsync();
+        Task<List<Functions>> RetrieveFunctionsAsync();
     }
     public class FunctionDataModel : IFunctionDataModel
     {
@@ -32,9 +32,9 @@ namespace MintClientControl.Models
             _http = http;
         }
 
-        public async Task<Functions[]> RetrieveFunctionsAsync()
+        public async Task<List<Functions>> RetrieveFunctionsAsync()
         {
-            return await _http.GetFromJsonAsync<Functions[]>("sample-data/Functions.json");
+            return await _http.GetFromJsonAsync<List<Functions>>("sample-data/Functions.json");
         }
     }
 }
