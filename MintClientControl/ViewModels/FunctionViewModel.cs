@@ -10,16 +10,19 @@ namespace MintClientControl.ViewModels
     {
         //Functions[] Functions { get; set; }
         public List<Functions> FunctionList { get; set; }
+        public Functions AddData { get; set; }
         public bool AddDialog { get; set; }
         void SendCommand(string command);
         Task RetrieveFunctionsAsync();
         void DeleteItem(Functions item);
+        public void AddItem();
         void OpenDialog();
     }
     public class FunctionViewModel : IFunctionViewModel
     {
         private List<Functions> _functions;
         private IFunctionDataModel _FunctionDataModel;
+        private Functions _addData;
 
         public FunctionViewModel(IFunctionDataModel FunctionDataModel)
         {
@@ -29,7 +32,7 @@ namespace MintClientControl.ViewModels
 
         public List<Functions> FunctionList { get => _functions; set => _functions=value; }
         public bool AddDialog { get; set; }
-
+        public Functions AddData { get => _addData; set => _addData=value; }
 
         public async Task RetrieveFunctionsAsync()
         {
@@ -45,6 +48,11 @@ namespace MintClientControl.ViewModels
         public void DeleteItem(Functions item)
         {
             FunctionList.Remove(item);
+
+        }
+        public void AddItem()
+        {
+            FunctionList.Add(AddData);
 
         }
 
