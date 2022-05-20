@@ -9,6 +9,7 @@ namespace MintClientControl.ViewModels
     public interface IFunctionViewModel
     {
         //Functions[] Functions { get; set; }
+        public string Error { get; set; }
         public List<Functions> FunctionList { get; set; }
         public Functions AddData { get; set; }
         public bool AddDialog { get; set; }
@@ -28,11 +29,13 @@ namespace MintClientControl.ViewModels
         {
             _FunctionDataModel = FunctionDataModel;
             AddDialog = false;
+            AddData = new Functions();
         }
 
         public List<Functions> FunctionList { get => _functions; set => _functions=value; }
         public bool AddDialog { get; set; }
         public Functions AddData { get => _addData; set => _addData=value; }
+        public string Error { get; set; }
 
         public async Task RetrieveFunctionsAsync()
         {
@@ -52,7 +55,16 @@ namespace MintClientControl.ViewModels
         }
         public void AddItem()
         {
-            FunctionList.Add(AddData);
+            if (AddData.Title != null && AddData.Command != null)
+            {
+                FunctionList.Add(AddData);
+                AddData = new Functions();
+                Error = "Function added successfully";
+            }
+            else
+            {
+                Error = "Missing data";
+            }
 
         }
 
