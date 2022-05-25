@@ -34,7 +34,7 @@ namespace MintClientControl.Models
 
         public async Task<List<Functions>> RetrieveFunctionsAsync()
         {
-            return await _http.GetFromJsonAsync<List<Functions>>("sample-data/Functions.json");
+            return await _http.GetFromJsonAsync<List<Functions>>("https://mintcontrolapi.azurewebsites.net/api/Functions");
         }
     }
 }
