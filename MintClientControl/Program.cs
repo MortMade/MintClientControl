@@ -21,6 +21,8 @@ namespace MintClientControl
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddTransient<IFetchDataModel, FetchDataModel>();
+
+            // Dependency Injection
             builder.Services.AddTransient<IFetchDataViewModel, FetchDataViewModel>();
             builder.Services.AddTransient<IFunctionDataModel, FunctionDataModel>();
             builder.Services.AddTransient<IFunctionViewModel, FunctionViewModel>();
