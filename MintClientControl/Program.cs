@@ -20,12 +20,18 @@ namespace MintClientControl
             builder.RootComponents.Add<App>("#app");
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            
+            
             builder.Services.AddTransient<IFetchDataModel, FetchDataModel>();
-
-            // Dependency Injection
             builder.Services.AddTransient<IFetchDataViewModel, FetchDataViewModel>();
             builder.Services.AddTransient<IFunctionDataModel, FunctionDataModel>();
             builder.Services.AddTransient<IFunctionViewModel, FunctionViewModel>();
+
+            builder.Services.AddOidcAuthentication(options =>
+            {
+                builder.Configuration.Bind("Auth0", options.ProviderOptions);
+                options.ProviderOptions.ResponseType = "code";
+            });
 
             await builder.Build().RunAsync();
         }

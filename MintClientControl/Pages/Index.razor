@@ -1,6 +1,13 @@
 ﻿@page "/"
 
-<h1>Mint Control Panel</h1>
+<AuthorizeView>
+    <Authorized>
+        <h1>Hello, @context.User.Identity.Name !</h1>
 
-Welcome to your the control panel please log in.
+        <p>Welcome to your new app.</p>
+    </Authorized>
+    <NotAuthorized>
+        <p>Not Authorized</p>
+    </NotAuthorized>
+</AuthorizeView>
 
