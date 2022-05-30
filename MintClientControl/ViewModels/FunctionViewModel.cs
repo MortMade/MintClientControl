@@ -13,6 +13,7 @@ namespace MintClientControl.ViewModels
         public List<Functions> FunctionList { get; set; }
         public Functions AddData { get; set; }
         public bool AddDialog { get; set; }
+        public string UserName { get; set; }
         void SendCommand(string command);
         Task RetrieveFunctionsAsync();
         void DeleteItem(Functions item);
@@ -36,10 +37,11 @@ namespace MintClientControl.ViewModels
         public bool AddDialog { get; set; }
         public Functions AddData { get => _addData; set => _addData=value; }
         public string Error { get; set; }
+        public string UserName { get; set; }
 
         public async Task RetrieveFunctionsAsync()
         {
-            _functions = await _FunctionDataModel.RetrieveFunctionsAsync();
+            _functions = await _FunctionDataModel.RetrieveFunctionsAsync($"https://mintcontrolapi.azurewebsites.net/api/Functions/{UserName}");
         }
 
         public void SendCommand(string command)
