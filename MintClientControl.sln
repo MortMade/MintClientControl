@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.32413.511
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MintClientControl", "MintClientControl\MintClientControl.csproj", "{0D64C494-62A1-4B48-9979-1AB50B8BE801}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MintClientControlTest", "MintClientControlTest\MintClientControlTest.csproj", "{4A2B30FD-A78B-496B-9948-2DC9FBEF6D28}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{0D64C494-62A1-4B48-9979-1AB50B8BE801}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D64C494-62A1-4B48-9979-1AB50B8BE801}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D64C494-62A1-4B48-9979-1AB50B8BE801}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A2B30FD-A78B-496B-9948-2DC9FBEF6D28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A2B30FD-A78B-496B-9948-2DC9FBEF6D28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A2B30FD-A78B-496B-9948-2DC9FBEF6D28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A2B30FD-A78B-496B-9948-2DC9FBEF6D28}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
