@@ -50,6 +50,10 @@
     color: white;
 }
 
+.navbar-dark {
+    background-color: #6441a5;
+}
+
 @media (min-width: 641px) {
     .navbar-toggler {
         display: none;

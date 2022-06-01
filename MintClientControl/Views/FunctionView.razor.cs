@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace MintClientControl.Views
 {
 
-    public partial class FunctionView
+    public class FunctionViewBase : ComponentBase
     {
         [Inject]
         public IFunctionViewModel ViewModel { get; set; }
