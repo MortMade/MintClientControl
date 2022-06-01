@@ -7,10 +7,10 @@
     <Authorized>
         <h1>Hello, @context.User.Identity.Name !</h1>
 
-        <p>Welcome to your new application.</p>
+        <p>Welcome to Mint Stream</p>
     </Authorized>
     <NotAuthorized>
-        <p>Not Logged in please authorize to see your function buttons</p>
+        <p>Oops. You're not logged in yet. Please log in to see your personal function buttons.</p>
     </NotAuthorized>
 </AuthorizeView>
 <p>@ViewModel.Notification</p>
@@ -33,33 +33,36 @@ else
             @foreach (var function in ViewModel.FunctionList)
             {
                 <tr>
-                    <td><button @onclick="@(e => ViewModel.SendCommand(function.Command))">@function.Title</button></td>
+                    <td><button class="btn btn-normal" @onclick="@(e => ViewModel.SendCommand(function.Command))">@function.Title</button></td>
                     <td>@function.Title</td>
-                    <td><button @onclick="@(e => ViewModel.DeleteItem(function))">Remove</button></td>
+                    <td><button class="btn btn-normal" @onclick="@(e => ViewModel.DeleteItem(function))">Remove</button></td>
                 </tr>
             }
         </tbody>
+
     </table>
 
 }
-<button @onclick="() => modal.Open()">Open Modal</button>
-<ModalDialog @ref="modal">
-    <Title>This is a <em>Title!</em></Title>
-    <Body>
-        <div class="form-group">
-            <label for="usr">Title:</label>
-            <input type="text" class="form-control" id="usr" @bind="@ViewModel.AddData.Title">
-        </div>
-        <div class="form-group">
-            <label for="usr">Command:</label>
-            <input type="text" class="form-control" id="usr" @bind="@ViewModel.AddData.Command">
-        </div>
-    </Body>
-    <Footer>
-            <button type="button" class="btn btn-primary" @onclick="@(e => { ViewModel.AddItem(); modal.Close(); })">Save changes</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => modal.Close()">Close</button>
-    </Footer>
-</ModalDialog>
+<br />
+<button class="btn btn-normal" @onclick="() => modal.Open()">Open Modal</button>
+    <ModalDialog @ref="modal">
+        <Title>Create your function button:</Title>
+        <Body>
+            <div class="form-group">
+                <label for="usr">Title:</label>
+                <input type="text" class="form-control" id="usr" @bind="@ViewModel.AddData.Title">
+            </div>
+            <div class="form-group">
+                <label for="usr">Command:</label>
+                <input type="text" class="form-control" id="usr" @bind="@ViewModel.AddData.Command">
+            </div>
+        </Body>
+        <Footer>
+            <button type="button" class="btn btn-create" @onclick="@(e => { ViewModel.AddItem(); modal.Close(); })">Save changes</button>
+            <button type="button" class="btn btn-cancel" data-dismiss="modal" @onclick="() => modal.Close()">Close</button>
+        </Footer>
+    </ModalDialog>
+
 
 @code {
     private ModalDialog modal { get; set; }

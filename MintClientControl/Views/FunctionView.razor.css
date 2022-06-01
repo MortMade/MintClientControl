@@ -1,0 +1,68 @@
+﻿.table {
+    color: #ffffff;
+}
+
+.modaltest {
+    background-color: #000000;
+}
+
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    color: #212529;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out
+}
+
+.btn:hover {
+    color: #212529;
+    text-decoration: none
+}
+
+.btn.disabled, .btn:disabled {
+    opacity: .65
+}
+
+.btn-normal {
+    background-color: #6441a5;
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
+    .btn-normal:hover {
+        color: #fff;
+        background-color: #9370db;
+        border-color: #ffffff;
+    }
+
+.btn-create {
+    background-color: #6441a5;
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
+    .btn-create:hover {
+        color: #fff;
+        background-color: #3cb371;
+        border-color: #ffffff;
+    }
+
+.btn-cancel {
+    background-color: #c0c0c0;
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
+    .btn-cancel:hover {
+        color: #fff;
+        background-color: #dc143c;
+        border-color: #ffffff;
+    }
