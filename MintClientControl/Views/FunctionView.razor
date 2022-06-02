@@ -59,7 +59,7 @@ else
             </div>
         </Body>
         <Footer>
-            <button type="button" class="btn btn-create" @onclick="@(e => { ViewModel.AddItem(); modal.Close(); })">Save changes</button>
+            <button type="button" class="btn btn-create" @onclick="@(e => { ViewModel.AddItem(); modal.Close();})">Save changes</button>
             <button type="button" class="btn btn-cancel" data-dismiss="modal" @onclick="() => modal.Close()">Close</button>
         </Footer>
     </ModalDialog>

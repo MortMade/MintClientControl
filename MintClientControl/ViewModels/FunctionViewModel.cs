@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MintClientControl.ViewModels
@@ -16,26 +17,22 @@ namespace MintClientControl.ViewModels
         public Functions AddData { get; set; }
         public bool AddDialog { get; set; }
         public string UserName { get; set; }
+        public event Action OnChange;
         void SendCommand(string command);
         Task RetrieveFunctionsAsync();
         void EditItem(Functions item);
         void CreateItem();
         void DeleteItem(Functions item);
-        public void AddItem();
+        public Task AddItem();
         void OpenDialog();
+        
     }
-    public class FunctionViewModel : IFunctionViewModel, INotifyPropertyChanged
+    public class FunctionViewModel : IFunctionViewModel
     {
         private List<Functions> _functions;
         // private IFunctionDataModel _FunctionDataModel;
         private Functions _addData;
         private bool _modalEdit;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         public FunctionViewModel()
         {
@@ -47,17 +44,21 @@ namespace MintClientControl.ViewModels
 
         public List<Functions> FunctionList
         { get { return _functions; }
-          set { _functions = value; NotifyPropertyChanged(); }
+          set { _functions = value;}
         }
         public bool AddDialog { get; set; }
         public Functions AddData { get => _addData; set => _addData=value; }
         public string Notification { get; set; }
         public string UserName { get; set; }
 
+        public event Action OnChange;
+        private void NotifyStateChanged() => OnChange?.Invoke();
+
         public async Task RetrieveFunctionsAsync()
         {
             FunctionList = await PersistencyService<Functions>.GetData($"api/Functions/{UserName}");
         }
+
 
         public void SendCommand(string command)
         {
@@ -74,23 +75,27 @@ namespace MintClientControl.ViewModels
             else
             { 
                 await PersistencyService<Functions>.DeleteData($"api/Functions/{item.FuncId}");
+                FunctionList = await PersistencyService<Functions>.GetData($"api/Functions/{UserName}");
+                NotifyStateChanged();
             }
         }
 
-        public async void AddItem()
+        public async Task AddItem()
         {
             if (_modalEdit)
             {
                 await PersistencyService<Functions>.UpdateData(AddData, $"api/Functions/{AddData.FuncId}");
+                NotifyStateChanged();
             }
             else
             {
                 if (AddData.Title != null && AddData.Command != null)
                 {
-                    AddData.UserId = 3;
-                    AddData.FuncRights = 0;
-                    await PersistencyService<Functions>.PostData(AddData, "api/Functions/");
-                    await PersistencyService<Functions>.GetData($"api/Functions/{UserName}");
+                    AddData.FuncRights = 0;//TODO set up dropdown
+                    await PersistencyService<Functions>.PostData(AddData, $"api/Functions/{UserName}");
+                    FunctionList = await PersistencyService<Functions>.GetData($"api/Functions/{UserName}");
+                    NotifyStateChanged();
+                    //AddData.UserId = 4;
                     //FunctionList.Add(AddData);
                     AddData = new Functions();
                     Notification = "Function added successfully";
@@ -99,7 +104,8 @@ namespace MintClientControl.ViewModels
                 {
                     Notification = "Missing data, please fill out all fields";
                 }
-            }  
+            }
+            
         }
 
         public void OpenDialog()
