@@ -2,6 +2,30 @@
     color: #ffffff;
 }
 
+.scrollbar {
+    position: relative;
+    height: 27rem;
+    overflow: auto;
+}
+
+.html {
+    --scrollbarBG: #6441a5;
+    --thumbBG: #6441a5;
+}
+
+.scrollbar::-webkit-scrollbar {
+    width: 11px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+    background: var(--scrollbarBG);
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    background-color: var(--thumbBG);
+    border-radius: 6px;
+    border: 3px solid var(--scrollbarBG);
+}
 
 .btn {
     display: inline-block;
