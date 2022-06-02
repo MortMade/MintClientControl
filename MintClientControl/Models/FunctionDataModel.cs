@@ -20,23 +20,5 @@ namespace MintClientControl.Models
         public int UserId { get; set; }
         public Rights FuncRights { get; set; }
     }
-    public interface IFunctionDataModel
-    {
-        Task<List<Functions>> RetrieveFunctionsAsync(string url);
-    }
-    public class FunctionDataModel : IFunctionDataModel
-    {
-        private HttpClient _http;
-        public FunctionDataModel(HttpClient http)
-        {
-            _http = http;
-        }
 
-        public async Task<List<Functions>> RetrieveFunctionsAsync(string url)
-        {
-            return await _http.GetFromJsonAsync<List<Functions>>(url);
-        }
-
-
-    }
 }

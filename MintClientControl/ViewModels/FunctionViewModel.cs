@@ -1,7 +1,9 @@
 ﻿using MintClientControl.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace MintClientControl.ViewModels
@@ -16,24 +18,37 @@ namespace MintClientControl.ViewModels
         public string UserName { get; set; }
         void SendCommand(string command);
         Task RetrieveFunctionsAsync();
+        void EditItem(Functions item);
+        void CreateItem();
         void DeleteItem(Functions item);
         public void AddItem();
         void OpenDialog();
     }
-    public class FunctionViewModel : IFunctionViewModel
+    public class FunctionViewModel : IFunctionViewModel, INotifyPropertyChanged
     {
         private List<Functions> _functions;
-        private IFunctionDataModel _FunctionDataModel;
+        // private IFunctionDataModel _FunctionDataModel;
         private Functions _addData;
+        private bool _modalEdit;
 
-        public FunctionViewModel(IFunctionDataModel FunctionDataModel)
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
-            _FunctionDataModel = FunctionDataModel;
-            AddDialog = false;
-            AddData = new Functions();
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public List<Functions> FunctionList { get => _functions; set => _functions=value; }
+        public FunctionViewModel()
+        {
+           // _FunctionDataModel = FunctionDataModel;
+            AddDialog = false;
+            AddData = new Functions();
+            _modalEdit = false;
+        }
+
+        public List<Functions> FunctionList
+        { get { return _functions; }
+          set { _functions = value; NotifyPropertyChanged(); }
+        }
         public bool AddDialog { get; set; }
         public Functions AddData { get => _addData; set => _addData=value; }
         public string Notification { get; set; }
@@ -41,7 +56,7 @@ namespace MintClientControl.ViewModels
 
         public async Task RetrieveFunctionsAsync()
         {
-            _functions = await _FunctionDataModel.RetrieveFunctionsAsync($"https://mintcontrolapi.azurewebsites.net/api/Functions/{UserName}");
+            FunctionList = await PersistencyService<Functions>.GetData($"api/Functions/{UserName}");
         }
 
         public void SendCommand(string command)
@@ -50,24 +65,41 @@ namespace MintClientControl.ViewModels
 
         }
 
-        public void DeleteItem(Functions item)
+        public async void DeleteItem(Functions item)
         {
-            FunctionList.Remove(item);
-
-        }
-        public void AddItem()
-        {
-            if (AddData.Title != null && AddData.Command != null)
+            if (item.UserId == 1)
             {
-                FunctionList.Add(AddData);
-                AddData = new Functions();
-                Notification = "Function added successfully";
+
+            }
+            else
+            { 
+                await PersistencyService<Functions>.DeleteData($"api/Functions/{item.FuncId}");
+            }
+        }
+
+        public async void AddItem()
+        {
+            if (_modalEdit)
+            {
+                await PersistencyService<Functions>.UpdateData(AddData, $"api/Functions/{AddData.FuncId}");
             }
             else
             {
-                Notification = "Missing data, please fill out all fields";
-            }
-
+                if (AddData.Title != null && AddData.Command != null)
+                {
+                    AddData.UserId = 3;
+                    AddData.FuncRights = 0;
+                    await PersistencyService<Functions>.PostData(AddData, "api/Functions/");
+                    await PersistencyService<Functions>.GetData($"api/Functions/{UserName}");
+                    //FunctionList.Add(AddData);
+                    AddData = new Functions();
+                    Notification = "Function added successfully";
+                }
+                else
+                {
+                    Notification = "Missing data, please fill out all fields";
+                }
+            }  
         }
 
         public void OpenDialog()
@@ -83,5 +115,16 @@ namespace MintClientControl.ViewModels
 
         }
 
+        public void EditItem(Functions item)
+        {
+            _modalEdit = true;
+            AddData = item;
+        }
+
+        public void CreateItem()
+        {
+            _modalEdit = false;
+            AddData = new Functions();
+        }
     }
 }
