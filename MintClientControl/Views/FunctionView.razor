@@ -35,7 +35,7 @@ else
                 <tr>
                     <td><button class="btn btn-normal" @onclick="@(e => ViewModel.SendCommand(function.Command))">@function.Title</button></td>
                     <td>@function.Title</td>
-                    <td><button class="btn btn-normal" @onclick="@(e => ViewModel.DeleteItem(function))">Remove</button></td>
+                    <td><button class="btn btn-remove" @onclick="@(e => ViewModel.DeleteItem(function))">Remove</button></td>
                 </tr>
             }
         </tbody>
@@ -44,7 +44,7 @@ else
 
 }
 <br />
-<button class="btn btn-normal" @onclick="() => modal.Open()">Open Modal</button>
+    <button class="btn btn-normal" @onclick="() => modal.Open()">Open Modal</button>
     <ModalDialog @ref="modal">
         <Title>Create your function button:</Title>
         <Body>

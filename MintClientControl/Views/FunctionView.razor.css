@@ -2,9 +2,6 @@
     color: #ffffff;
 }
 
-.modaltest {
-    background-color: #000000;
-}
 
 .btn {
     display: inline-block;
@@ -40,6 +37,18 @@
     .btn-normal:hover {
         color: #fff;
         background-color: #9370db;
+        border-color: #ffffff;
+    }
+
+.btn-remove {
+    background-color: #6441a5;
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
+    .btn-remove:hover {
+        color: #fff;
+        background-color: #dc143c;
         border-color: #ffffff;
     }
 
