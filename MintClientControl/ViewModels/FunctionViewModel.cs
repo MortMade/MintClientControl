@@ -56,7 +56,7 @@ namespace MintClientControl.ViewModels
 
         public async Task RetrieveFunctionsAsync()
         {
-            FunctionList = await PersistencyService<Functions>.GetData($"api/Functions/{UserName}");
+            FunctionList = await PersistenceService<Functions>.GetData($"api/Functions/{UserName}");
         }
 
 
@@ -74,8 +74,8 @@ namespace MintClientControl.ViewModels
             }
             else
             { 
-                await PersistencyService<Functions>.DeleteData($"api/Functions/{item.FuncId}");
-                FunctionList = await PersistencyService<Functions>.GetData($"api/Functions/{UserName}");
+                await PersistenceService<Functions>.DeleteData($"api/Functions/{item.FuncId}");
+                FunctionList = await PersistenceService<Functions>.GetData($"api/Functions/{UserName}");
                 NotifyStateChanged();
             }
         }
@@ -84,7 +84,7 @@ namespace MintClientControl.ViewModels
         {
             if (_modalEdit)
             {
-                await PersistencyService<Functions>.UpdateData(AddData, $"api/Functions/{AddData.FuncId}");
+                await PersistenceService<Functions>.UpdateData(AddData, $"api/Functions/{AddData.FuncId}");
                 NotifyStateChanged();
             }
             else
@@ -92,8 +92,8 @@ namespace MintClientControl.ViewModels
                 if (AddData.Title != null && AddData.Command != null)
                 {
                     AddData.FuncRights = 0;//TODO set up dropdown
-                    await PersistencyService<Functions>.PostData(AddData, $"api/Functions/{UserName}");
-                    FunctionList = await PersistencyService<Functions>.GetData($"api/Functions/{UserName}");
+                    await PersistenceService<Functions>.PostData(AddData, $"api/Functions/{UserName}");
+                    FunctionList = await PersistenceService<Functions>.GetData($"api/Functions/{UserName}");
                     NotifyStateChanged();
                     //AddData.UserId = 4;
                     //FunctionList.Add(AddData);

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MintClientControl
 {
-    public class PersistencyService<T>
+    public class PersistenceService<T>
     {
         const string serverURL = "https://mintcontrolapi.azurewebsites.net/";
         static HttpClient client = new HttpClient();
