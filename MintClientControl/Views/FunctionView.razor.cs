@@ -19,6 +19,7 @@ namespace MintClientControl.Views
         protected override async Task OnInitializedAsync()
         {
             ViewModel.OnChange += StateHasChanged;
+
             var authState = await authenticationStateTask;
             var user = authState.User;
             if (user.Identity.IsAuthenticated)
