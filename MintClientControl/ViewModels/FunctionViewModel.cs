@@ -25,7 +25,7 @@ namespace MintClientControl.ViewModels
         void DeleteItem(Functions item);
         public Task AddItem();
         void OpenDialog();
-        
+
     }
     public class FunctionViewModel : IFunctionViewModel
     {
@@ -36,18 +36,19 @@ namespace MintClientControl.ViewModels
 
         public FunctionViewModel()
         {
-           // _FunctionDataModel = FunctionDataModel;
+            // _FunctionDataModel = FunctionDataModel;
             AddDialog = false;
             AddData = new Functions();
             _modalEdit = false;
         }
 
         public List<Functions> FunctionList
-        { get { return _functions; }
-          set { _functions = value;}
+        {
+            get { return _functions; }
+            set { _functions = value; }
         }
         public bool AddDialog { get; set; }
-        public Functions AddData { get => _addData; set => _addData=value; }
+        public Functions AddData { get => _addData; set => _addData = value; }
         public string Notification { get; set; }
         public string UserName { get; set; }
 
@@ -70,10 +71,10 @@ namespace MintClientControl.ViewModels
         {
             if (item.UserId == 1)
             {
-
+                Notification = "Can't delete standard field";
             }
             else
-            { 
+            {
                 await PersistenceService<Functions>.DeleteData($"api/Functions/{item.FuncId}");
                 FunctionList = await PersistenceService<Functions>.GetData($"api/Functions/{UserName}");
                 NotifyStateChanged();
@@ -84,8 +85,22 @@ namespace MintClientControl.ViewModels
         {
             if (_modalEdit)
             {
-                await PersistenceService<Functions>.UpdateData(AddData, $"api/Functions/{AddData.FuncId}");
-                NotifyStateChanged();
+                if (AddData.Title != null && AddData.Command != null)
+                {
+                    if (AddData.UserId == 1)
+                    {
+                        Notification = "Can't delete standard field";
+                    }
+                    else
+                    {
+                        await PersistenceService<Functions>.UpdateData(AddData, $"api/Functions/{AddData.FuncId}");
+                        NotifyStateChanged();
+                    }
+                }
+                else
+                {
+                    Notification = "Missing data, please fill out all fields";
+                }
             }
             else
             {
@@ -105,7 +120,7 @@ namespace MintClientControl.ViewModels
                     Notification = "Missing data, please fill out all fields";
                 }
             }
-            
+
         }
 
         public void OpenDialog()
