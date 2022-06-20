@@ -5,7 +5,8 @@
 
 <AuthorizeView>
     <Authorized>
-        <h1>Hello, @context.User.Identity.Name</h1>
+        <h1>Hello, @ViewModel.UserName</h1>
+        
 
         <p>Welcome to Mint Stream</p>
 
@@ -45,7 +46,7 @@
 
         }
         <br />
-        <button class="btn btn-normal" @onclick="@(e => { ViewModel.CreateItem(); modal.Open(); })">Create function</button>
+        <button id="OpenNewModal" class="btn btn-normal" @onclick="@(e => { ViewModel.CreateItem(); modal.Open(); })">Create function</button>
     </Authorized>
     <NotAuthorized>
         <p>Oops. You're not logged in yet. Please log in to see your personal function buttons.</p>

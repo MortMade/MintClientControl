@@ -2,7 +2,7 @@
 
 <AuthorizeView>
     <Authorized>
-        <h1>Hello, @context.User.Identity.Name</h1>
+        <h1>Hello, @UserName</h1>
 
         <p>Welcome to Mint Stream</p>
     </Authorized>
@@ -10,4 +10,28 @@
         <p>Oops. You're not logged in yet. Please log in.</p>
     </NotAuthorized>
 </AuthorizeView>
+
+@code 
+{
+    public string UserName { get; set; }
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+
+
+        var authState = await authenticationStateTask;
+        var user = authState.User;
+        if (user.Identity.IsAuthenticated)
+        {
+            UserName = user.Claims.FirstOrDefault(c => c.Type == "preferred_username")?.Value;
+            var claims = user.Claims;
+        }
+        else
+        {
+
+        }
+
+    }
+}
 

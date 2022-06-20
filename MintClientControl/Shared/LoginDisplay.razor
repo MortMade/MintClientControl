@@ -6,7 +6,8 @@
 
 <AuthorizeView>
     <Authorized>
-        Hello, @context.User.Identity.Name! &nbsp;&nbsp;
+        You are now logged in as: @UserName! &nbsp;&nbsp;
+        <img src="@PictureAddress" height="30rem">&nbsp;&nbsp;
         <div class="loginout" @onclick="BeginSignOut">Log out</div>
     </Authorized>
     <NotAuthorized>
@@ -15,6 +16,27 @@
 </AuthorizeView>
 
 @code{
+    public string UserName { get; set; }
+    public string PictureAddress { get; set; }
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+
+
+        var authState = await authenticationStateTask;
+        var user = authState.User;
+        if (user.Identity.IsAuthenticated)
+        {
+            UserName = user.Claims.FirstOrDefault(c => c.Type == "preferred_username")?.Value;
+            PictureAddress = user.Claims.FirstOrDefault(c => c.Type == "picture")?.Value;
+        }
+        else
+        {
+
+        }
+
+    }
     private async Task BeginSignOut(MouseEventArgs args)
     {
         await SignOutManager.SetSignOutState();

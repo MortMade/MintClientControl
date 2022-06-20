@@ -4,6 +4,7 @@ using MintClientControl.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace MintClientControl.Views
@@ -24,7 +25,9 @@ namespace MintClientControl.Views
             var user = authState.User;
             if (user.Identity.IsAuthenticated)
             {
-                ViewModel.UserName = $"{user.Identity.Name}";
+                //ViewModel.UserName = $"{user.Identity.Name}";
+                //var claims = user.Identity;
+                ViewModel.UserName = user.Claims.FirstOrDefault(c => c.Type == "preferred_username")?.Value;
             }
             else
             {
